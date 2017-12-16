@@ -114,7 +114,7 @@ class	Biomon(object):
 				# #if len(rdlnstr)>0:
 				
 				if(self.MsgFilter):
-					print ("readPort rdln=", rdln) #,  "; utf=", rdln.decode('utf-8'))
+					print(("readPort rdln=", rdln)) #,  "; utf=", rdln.decode('utf-8'))
 					
 				#return rdln.decode('utf-8')
 				#self.serial.close()
@@ -129,7 +129,7 @@ class	Biomon(object):
 			 
 		except IOError as e:
 			if(self.MsgFilter):
-				print ("portIo error= ", e.strerror)
+				print(("portIo error= ", e.strerror))
 			self.serial.close()
 			raise
 		else:
@@ -179,10 +179,10 @@ def timeStamp():
 ###############################
 def readAllSensors(outFile, mon):
 	if os.path.isfile(outFile)==False:
-		print "readAllSensors reading ..."
+		print("readAllSensors reading ...")
 		f = open(outFile, "w")
 		rd = mon.readAll()
-		print rd
+		print(rd)
 		f.write(rd)
 		f.close()
 	else:
@@ -192,10 +192,10 @@ def readAllSensors(outFile, mon):
 ###############################
 def motorAction(inFile, mon):
 	if os.path.isfile(inFile)==True:
-		print "motorAction reading ..."
+		print("motorAction reading ...")
 		f = open(inFile, "r")
 		rd = f.read()
-		print "motor cmd = ", rd
+		print("motor cmd = ", rd)
 		f.close()
 		rd = rd.rstrip('\n') + '\r'
 		mon.io("w", rd, 5)
@@ -209,10 +209,10 @@ def main(argv):
 	outFile = "/tmp/biomon.out.csv"
 	
 	mon = Biomon("/dev/ttyACM0")
-	print mon
+	print(mon)
 
 	rd = mon.readAll(2)
-	print "readAll = ", rd
+	print("readAll = ", rd)
 	
 	while (True):
 		readAllSensors(outFile, mon)
