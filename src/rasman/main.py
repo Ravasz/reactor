@@ -16,11 +16,10 @@ from datetime import datetime
 import calendar
 import json
 import os
-import re
 import sqlite3
 
 from flask import Flask, request, session, g, redirect, url_for, \
-     abort, render_template, flash, escape, jsonify, Response
+     render_template, flash, jsonify, Response
 
 from rasman import Rasman
 
@@ -276,24 +275,24 @@ def api_addmeas():
     return jsonify(status='OK', meas=meas)
 
 @app.route("/api/setmotor/<id>/<value>")
-def api_setmotor(id, value):
+def api_setmotor(idStr, value):
     """Control a motor's speed"""
     app.logger.info("API: control a motor's speed...")
-    st = _gRasman.setmotor(id, value)
+    st = _gRasman.setmotor(idStr, value)
     return jsonify(status=st)
 
 @app.route("/api/setswitch/<id>/<value>")
-def api_setswitch(id, value):
+def api_setswitch(idStr, value):
     """Control a Peltier or light switch"""
     app.logger.info("API: control a Peltier or light switch...")
-    st = _gRasman.setswitch(id, value)
+    st = _gRasman.setswitch(idStr, value)
     return jsonify(status=st)
 
 
     
 @app.route("/api/history/")
 def api_history():
-    sensors = DEFAULT_CONFIG['sensors']
+    # sensors = DEFAULT_CONFIG['sensors']
     meas = get_saved_measurements(limit=12*24*2, for_upload=True)   # 2-day graph
     #i am sorry
     unixify = lambda x: (1000 * calendar.timegm(datetime.strptime(x[0:19], "%Y-%m-%d %H:%M:%S").timetuple())) + int(x[20:])

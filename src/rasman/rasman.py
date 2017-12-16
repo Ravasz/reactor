@@ -10,10 +10,10 @@
 from random import random, randint
 
 def info(msg):
-    print "INFO: %s" % msg
+    print("INFO: %s" % msg)
 
 def error(msg):
-    print "ERROR: %s" % msg
+    print("ERROR: %s" % msg)
 
 
 class Rasman():
@@ -29,7 +29,7 @@ class Rasman():
         info("Rasman.send: INIT<cr>")
         return 'OK'
     
-    def setmotor(self, id, value):
+    def setmotor(self, idStr, value):
         """Control a motor's speed
         
         Args:
@@ -41,17 +41,17 @@ class Rasman():
         """
         try:
             value = int(value)
-        except ValueError, e:
+        except ValueError:
             error("Not an integer '%s'" % value)
             return 'ERR'
         if value in (0, 1, 2, 3):
-            info("Rasman.send: SETMOTOR %s %s<cr>" % (id, value))
+            info("Rasman.send: SETMOTOR %s %s<cr>" % (idStr, value))
             return 'OK'
         else:
             error("Invalid motor value %d... expecting 0, 1, 2 or 3" % value)
             return 'ERR'
     
-    def setswitch(self, id, value):
+    def setswitch(self, idStr, value):
         """Turn on/off a Peltier or light switch
 
         Args:
@@ -63,11 +63,11 @@ class Rasman():
         """
         try:
             value = int(value)
-        except ValueError, e:
+        except ValueError:
             error("Not an integer '%s'" % value)
             return 'ERR'
         if value in (0, 1):
-            info("Rasman.send: SETSWITCH %s %s<cr>" % (id, value))
+            info("Rasman.send: SETSWITCH %s %s<cr>" % (idStr, value))
             return 'OK'
         else:
             error("Invalid switch value %d... expecting 0 or 1" % value)
